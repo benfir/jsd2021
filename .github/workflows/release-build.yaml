@@ -1,9 +1,8 @@
 name: release-build
 
-on: workflow_dispatch
-#on:
-#  release:
-#    types: [created]
+on:
+  release:
+    types: [created]
 
 jobs:
   build:
@@ -21,27 +20,27 @@ jobs:
       run: gu install native-image
     - name: Set version
       run: ./mvnw versions:set -DnewVersion="${{ github.event.release.tag_name }}"
-#    - name: Build jvm jar
-#      run: ./mvnw package
-#    - name: Upload jvm
-#      id: upload-jar
-#      uses: actions/upload-release-asset@v1
-#      env:
-#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#      with:
-#        upload_url: ${{ github.event.release.upload_url }}
-#        asset_path: ./target/generate-${{ github.event.release.tag_name }}-runner.jar
-#        asset_name: generate-${{ github.event.release.tag_name }}.jar
-#        asset_content_type: application/octet-stream
+    - name: Build jvm jar
+      run: ./mvnw package
+    - name: Upload jvm
+      id: upload-jar
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ./target/generate-${{ github.event.release.tag_name }}-runner.jar
+        asset_name: generate-${{ github.event.release.tag_name }}.jar
+        asset_content_type: application/octet-stream
     - name: Build native executable
       run: ./mvnw package -Dnative
-#    - name: Upload native executable
-#      id: upload-native-executable
-#      uses: actions/upload-release-asset@v1
-#      env:
-#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#      with:
-#        upload_url: ${{ github.event.release.upload_url }}
-#        asset_path: ./target/generate-${{ github.event.release.tag_name }}-runner
-#        asset_name: generate-${{ github.event.release.tag_name }}-linux
-#        asset_content_type: application/octet-stream
+    - name: Upload native executable
+      id: upload-native-executable
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ./target/generate-${{ github.event.release.tag_name }}-runner
+        asset_name: generate-${{ github.event.release.tag_name }}-linux
+        asset_content_type: application/octet-stream

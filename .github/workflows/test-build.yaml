@@ -1,0 +1,24 @@
+name: release-build
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install graalvm
+      uses: DeLaGuardo/setup-graalvm@master
+      with:
+        graalvm: '21.0.0.2'
+        java: java11
+        arch: amd64
+    - name: Install native-image
+      run: gu install native-image
+    - name: Set version
+      run: ./mvnw versions:set -DnewVersion="${{ github.event.release.tag_name }}"
+    - name: Build jvm jar
+      run: ./mvnw package
+    - name: Build native executable
+      run: ./mvnw package -Dnative
