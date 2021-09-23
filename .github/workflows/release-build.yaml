@@ -1,8 +1,9 @@
 name: release-build
 
-on:
-  release:
-    types: [created]
+on: workflow_dispatch
+#on:
+#  release:
+#    types: [created]
 
 jobs:
   build:
