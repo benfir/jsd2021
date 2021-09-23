@@ -1,0 +1,14 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: {params.name}
+allowVolumeExpansion: {params.allowVolumeExpansion}
+allowedTopologies:
+mountOptions:
+{#for option in params.mountOptions.orEmpty}
+- {option}
+{/for}
+parameters:
+provisioner: {params.provisioner}
+reclaimPolicy: {params.reclaimPolicy}
+volumeBindingMode: {params.volumeBindingMode}

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {params.name}
+  namespace: {params.namespace}
+spec:
+  accessModes:
+  - {params.accessMode}
+  resources:
+    requests:
+      storage: {params.storageRequest}
+  {#if params.storageClass}
+  storageClassName: {params.storageClass}
+  {/if}
+  volumeMode: Filesystem
