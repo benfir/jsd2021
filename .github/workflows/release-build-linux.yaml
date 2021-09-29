@@ -42,5 +42,17 @@ jobs:
       with:
         upload_url: ${{ github.event.release.upload_url }}
         asset_path: ./target/generate-${{ github.event.release.tag_name }}-runner
-        asset_name: generate-${{ github.event.release.tag_name }}-linux
+        asset_name: generate-${{ github.event.release.tag_name }}-linux-amd64
+        asset_content_type: application/octet-stream
+    - name: Build tar.gz
+      run: tar -czf ./target/generate-${{ github.event.release.tag_name }}-linux-amd64.tar.gz ./target/generate-${{ github.event.release.tag_name }}-runner
+    - name: Upload tar.gz
+      id: upload-tar-gz
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ./target/generate-${{ github.event.release.tag_name }}-linux-amd64.tar.gz
+        asset_name: generate-${{ github.event.release.tag_name }}-linux-amd64.tar.gz
         asset_content_type: application/octet-stream
