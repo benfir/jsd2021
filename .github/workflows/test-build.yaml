@@ -22,3 +22,5 @@ jobs:
       run: ./mvnw package
     - name: Build native executable
       run: ./mvnw package -Dnative
+    - name: Build tar.gz
+      run: tar -czf ./target/generate_"${{ github.event.release.tag_name }}"_linux_amd64.tar.gz ./target/generate-${{ github.event.release.tag_name }}-runner
