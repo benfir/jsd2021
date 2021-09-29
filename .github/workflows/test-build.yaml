@@ -17,10 +17,10 @@ jobs:
     - name: Install native-image
       run: gu install native-image
     - name: Set version
-      run: ./mvnw versions:set -DnewVersion="${{ github.event.release.tag_name }}"
+      run: ./mvnw versions:set -DnewVersion="v0.0.1"
     - name: Build jvm jar
       run: ./mvnw package
     - name: Build native executable
       run: ./mvnw package -Dnative
     - name: Build tar.gz
-      run: tar -czf ./target/generate_"${{ github.event.release.tag_name }}"_linux_amd64.tar.gz ./target/generate-${{ github.event.release.tag_name }}-runner
+      run: tar -czf ./target/generate_v0.0.1_linux_amd64.tar.gz ./target/generate-v0.0.1-runner
