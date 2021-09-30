@@ -3,19 +3,19 @@ kind: Plugin
 metadata:
   name: generate
 spec:
-  version: "v0.0.1"
+  version: "v0.0.4"
   shortDescription: A new plugin
   homepage: https://github.com/benfir/jsd2021
   description: |
-    This pluging generates k8s manifests for pvc, ...
+    This pluging generates k8s manifests for storageclass and pvc.
   platforms:
   - selector:
       matchLabels:
         os: linux
         arch: amd64
-    uri: https://github.com/benfir/jsd2021/releases/download/v0.0.1/generate_linux_amd64.tar.gz
-    sha256: a295c13d50895e83a9bba24792e42187aefbaee028e516f6affdb6c4e11c8bf8
+    uri: https://github.com/benfir/jsd2021/releases/download/v0.0.4/generate-v0.0.4-linux-amd64.tar.gz
+    sha256: 9aec5d0ddaa7330662af1938d03f6cfbee0d6a687fd2144e7641fdc2da04bee1
     files:
     - from: "./*"
       to: "."
-    bin: "target/generate-0.0.1-runner"
+    bin: "target/generate-v0.0.4-runner"
