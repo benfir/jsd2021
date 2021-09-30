@@ -16,7 +16,7 @@ import picocli.CommandLine.Parameters;
     GeneratePvcCommand.class,
     GenerateStorageClassCommand.class,
   },
-  version = "0.0.1"
+  version = "0.0.4"
 )
 public class GenerateCommand
 {
