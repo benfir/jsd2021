@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+echo "kubectl plugins are awesome! And we can write our own ;-)"
