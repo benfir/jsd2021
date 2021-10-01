@@ -1,0 +1,26 @@
+
+[%notitle]
+=== NoTitle
+
+App should start and stop fast ;-) 
+
+[%step]
+* Java
+* Quarkus
+* GraalVM
+
+[%notitle]
+=== NoTitle
+
+cli mode (handling of parameters/options/...)
+
+[%step]
+* picocli
+
+[%notitle]
+=== NoTitle
+
+how to interact with Kubernetes?
+
+[%step]
+* fabric8

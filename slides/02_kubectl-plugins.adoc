@@ -1,0 +1,76 @@
+
+=== What is it?
+
+extends kubectl with extra functionality but still feels like kubectl
+
+=== Why?
+
+[%step]
+* development outside Kubernetes release cycle
+* language agnostic
+* great user experience
+
+=== Example
+
+[source]
+----
+$ kubectl have fun
+$ kubectl plugins are awesome! And we can write our own ;-)
+----
+
+=== What happens behind the Scene?
+
+[%step]
+* kubectl makes an **execve** system call
+* replaces the kubectl with the plugin process
+* plugin process will inherit
+[%step]
+** the environment variables and
+** the standard streams
+
+=== Recipe
+
+Create our first plugin in four simple step 
+
+=== Step1
+
+* create a file named "kubectl-have"
+
+[%source,bash]
+----
+#!/usr/bin/env bash
+echo "kubectl plugins are awesome! And we can write our own ;-)"
+----
+
+=== Step2
+
+* make it executable
+
+[source,shell]
+----
+$ chmod +x ./kubectl-have
+----
+
+=== Step3
+
+* put it your path
+
+[source,shell]
+----
+$ cp ./kubectl-have $HOME/bin
+----
+
+=== Step4
+
+* run it
+
+[source,shell]
+----
+$ kubectl have fun
+kubectl plugins are awesome! And we can write our own ;-)
+----
+
+=== Rules
+
+* naming is important
+* can’t overwrite existing kubectl commands

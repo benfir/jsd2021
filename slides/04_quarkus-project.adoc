@@ -1,0 +1,131 @@
+
+=== Create Project Skeleton
+
+[source,shell,highlight=1..5|7..46]
+----
+$ mvn io.quarkus:quarkus-maven-plugin:2.2.2.Final:create \
+  -DprojectGroupId=de.benfir.k8s.plugins \
+  -DprojectArtifactId=generate \
+  -DprojectVersion=1.0.0-SNAPSHOT \
+  -Dextensions=pico,kubernetes-client
+
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------< org.apache.maven:standalone-pom >-------------------
+[INFO] Building Maven Stub Project (No POM) 1
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- quarkus-maven-plugin:2.2.2.Final:create (default-cli) @ standalone-pom ---
+[INFO] Looking for the newly published extensions in registry.quarkus.io
+[INFO] -----------
+[INFO] selected extensions: 
+- io.quarkus:quarkus-picocli
+- io.quarkus:quarkus-kubernetes-client
+
+[INFO] 
+applying codestarts...
+[INFO] 📚  java
+🔨  maven
+📦  quarkus
+📝  config-properties
+🔧  dockerfiles
+🔧  maven-wrapper
+🚀  picocli-codestart
+[INFO] 
+-----------
+[SUCCESS] ✅  quarkus project has been successfully generated in:
+--> /home/bf/Documents/Projects/github/benfir/generate
+-----------
+[INFO] 
+[INFO] ========================================================================================
+[INFO] Your new application has been created in /home/bf/Documents/Projects/github/benfir/generate
+[INFO] Navigate into this directory and launch your application with mvn quarkus:dev
+[INFO] Your application will be accessible on http://localhost:8080
+[INFO] ========================================================================================
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  7.415 s
+[INFO] Finished at: 2021-09-30T21:28:18+02:00
+[INFO] ------------------------------------------------------------------------
+----
+
+[.notes]
+--
+* show project structure and important files in editor
+--
+
+=== DevMode
+
+[source,shell]
+----
+$ mvn quarkus:dev
+----
+
+[.notes]
+--
+* correct GreetingCommand.run() > printf() -> print()
+* show options especially "e" and "q"
+--
+
+=== Java Application
+
+[source,shell,highlight=1|4|5..13]
+----
+$ mvn clean package
+  <...>
+
+$ java -jar ./target/quarkus-app/quarkus-run.jar JSD2021
+__  ____  __  _____   ___  __ ____  ______ 
+ --/ __ \/ / / / _ | / _ \/ //_/ / / / __/ 
+ -/ /_/ / /_/ / __ |/ , _/ ,< / /_/ /\ \   
+--\___\_\____/_/ |_/_/|_/_/|_|\____/___/   
+2021-09-28 00:02:14,045 INFO  [io.quarkus] (main) generate 1.0.0-SNAPSHOT on JVM (powered by Quarkus 2.2.3.Final) started in 0.996s. 
+2021-09-28 00:02:14,051 INFO  [io.quarkus] (main) Profile prod activated. 
+2021-09-28 00:02:14,051 INFO  [io.quarkus] (main) Installed features: [cdi, kubernetes-client, picocli, qute]
+Hello picocli, go go commando!
+2021-09-28 00:02:14,197 INFO  [io.quarkus] (main) generate stopped in 0.006
+----
+
+=== Extend
+
+.remove output
+[source]
+----
+quarkus.log.level=SEVERE
+quarkus.banner.enabled=false
+----
+
+.add Option
+[source,java]
+----
+@CommandLine.Option(
+  names = {"--times"},
+  description = "times",
+  defaultValue = "1"
+)
+int times;
+----
+
+=== Native App
+
+[source,shell,highlight='2..4|8..9']
+----
+$ mvn clean package -DskipTests=true\
+  -Pnative \
+  -Dquarkus.native.container-build=true \
+  -Dquarkus.native.container-runtime=podman
+<...>
+<...>
+<...>
+$ ./target/generate-1.0.0-SNAPSHOT-runner
+$ ./target/generate-1.0.0-SNAPSHOT-runner --help
+----
+
+[.notes]
+--
+* takes too long for presentation (round about 5 minutes)
+* ../jsd2021/zzTemp/generate-1.0.0-SNAPSHOT-runner
+--
+

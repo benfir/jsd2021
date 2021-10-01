@@ -1,0 +1,79 @@
+
+[%notitle]
+=== NoTitle
+
+command line tool for REST-like Kubernetes-API-Server
+
+[%notitle]
+=== NoTitle
+
+[source,shell,highlight=1..2|5..11]
+----
+$ curl --insecure --cert $CRT --key $KEY \
+  https://m01.cluster02.local:6443
+{
+  "paths": [
+    "/api",
+    "/api/v1",
+    "/apis",
+    "/apis/",
+    ...
+   "/version"
+  ]
+}
+----
+
+[.notes]
+--
+$ source ~/bin/prepare-env.source
+
+$ export CRT=/home/bf/.kube/cluster02-kubeadmin.crt
+$ export KEY=/home/bf/.kube/cluster02-kubeadmin.key
+--
+
+[%notitle]
+=== NoTitle
+
+[source,shell,highlight=1|2..8|9]
+----
+$ kubectl run testpod --image=nginx -v7
+... Config loaded from file:  /home/bf/.kube/config
+... POST https://10.67.25.231:6443/api/v1/namespaces/default/pods?fieldManager=kubectl-run
+... Request Headers:
+...     Accept: application/json, */*
+...     Content-Type: application/json
+...     User-Agent: kubectl/v1.21.5 (linux/amd64) kubernetes/aea7bba
+... Response Status: 201 Created in 24 milliseconds
+pod/testpod created
+----
+
+[%notitle]
+=== NoTitle
+
+[source,shell,highlight=1|2..24]
+----
+$ kubectl run testpod --image=nginx --dry-run=client -ojson
+{
+    "kind": "Pod",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "testpod",
+        "creationTimestamp": null,
+        "labels": {
+            "run": "tespod"
+        }
+    },
+    "spec": {
+        "containers": [
+            {
+                "name": "tespod",
+                "image": "nginx",
+                "resources": {}
+            }
+        ],
+        "restartPolicy": "Always",
+        "dnsPolicy": "ClusterFirst"
+    },
+    "status": {}
+}
+----
